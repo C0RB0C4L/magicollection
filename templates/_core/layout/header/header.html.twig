@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark py-2 border-bottom">
+	<div class="container">
+
+		{% include "_core/layout/header/partials/site_logo.html.twig" %}
+
+		{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+
+			<button class="navbar-toggler p" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse justify-content-between pt-2 pt-lg-0" id="navbarSupportedContent">
+
+				{% include "_core/layout/header/partials/menu_primary.html.twig" %}
+
+				{% include "_core/layout/header/partials/search_bar.html.twig" %}
+
+				{% include "_core/layout/header/partials/menu_extra.html.twig" %}
+
+				{% include "_core/layout/header/partials/menu_secondary.html.twig" %}
+
+			</div>
+
+		{% else %}
+
+			{% include "_core/layout/header/partials/login_button.html.twig" %}
+
+		{% endif %}
+
+	</div>
+</nav>

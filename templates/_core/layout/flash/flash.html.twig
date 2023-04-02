@@ -1,0 +1,28 @@
+{% if app.flashes is not empty %}
+	<div class="container-fluid py-4 position-fixed" style="z-index:1500;">
+		{% for type, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert border-{{type}} text-{{type}} bg-dark border border-2 py-2 rounded-3 shadow-sm w-75 mx-auto">
+					<div class="card-header py-2">
+
+						<h5 class="my-0">
+							<span>
+								{% if type == "success" %}
+									<i class="bi bi-check-circle" role="img"></i>
+								{% elseif type == "warning" %}
+									<i class="bi bi-exclamation-triangle" role="img"></i>
+								{% elseif type == "danger" %}
+									<i class="bi bi-exclamation-octagon" role="img"></i>
+								{% else %}
+									<i class="bi bi-question-circle" role="img"></i>
+								{% endif %}
+							</span>
+							{{ message|raw }}
+						</h5>
+
+					</div>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+{% endif %}
