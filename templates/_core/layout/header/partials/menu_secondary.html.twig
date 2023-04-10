@@ -1,9 +1,12 @@
-<ul class="navbar-nav fs-5 align-items-lg-center">
+<ul class="navbar-nav align-items-lg-center">
+
+	{% include "_core/layout/header/partials/menu_extra.html.twig" %}
 
 	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle py-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			{{app.user}}
-			<i class="bi bi-person-circle" role="img"></i>
+		<a class="nav-link dropdown-toggle py-lg-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<span class="d-none d-lg-inline me-1">{{"test"}}</span>
+			<i class="bi bi-person-circle fs-5 me-1" role="img"></i>
+			<span class="d-inline d-lg-none">{{"test"}}</span>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
 			<li>
