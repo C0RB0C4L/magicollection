@@ -3,7 +3,7 @@
 
 		{% include "_core/layout/header/partials/site_logo.html.twig" %}
 
-		{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
 			{% include '_core/layout/header/partials/search_mobile_button.html.twig' %}
 

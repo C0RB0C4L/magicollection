@@ -1,0 +1,31 @@
+{% form_theme loginForm 'bootstrap_5_layout.html.twig' %}
+{{form_start(loginForm)}}
+
+<div class="mb-3 input-group">
+	<span class="input-group-text bg-dark text-light">
+		<i class="bi bi-person-square" role="img"></i>
+	</span>
+	{{form_widget(loginForm.username)}}
+</div>
+
+<div class="mb-3 input-group">
+	<span class="input-group-text bg-dark text-light">
+		<i class="bi bi-key" role="img"></i>
+	</span>
+	{{form_widget(loginForm.password)}}
+</div>
+
+<div class="checkbox mb-3">
+	<label>
+		<input type="checkbox" name="_remember_me">
+		{% trans %}login.remember{% endtrans %}
+	</label>
+</div>
+
+<div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+	<button class="btn btn-success w-100" type="submit">
+		<i class="bi bi-box-arrow-in-right me-1"></i>{% trans %}log.in{% endtrans %}
+	</button>
+</div>
+
+{{form_end(loginForm)}}
