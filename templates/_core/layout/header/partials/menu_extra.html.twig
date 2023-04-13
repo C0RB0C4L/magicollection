@@ -1,18 +1,18 @@
-{% if not is_granted('ROLE_TESTER') %}
+{% if is_granted('ROLE_TESTER') %}
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle text-warning py-lg-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			<i class="bi bi-tools text-warning me-1 fs-5" role="img"></i>
 			<span class="d-inline d-lg-none">{% trans %}header.menu.test{% endtrans %}</span>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-			<div class="d-none d-lg-block">
-				<li class="px-3">
+			<li>
+				<a class="dropdown-item" href="{{path('app_admin_index')}}">
 					{% trans %}header.menu.test{% endtrans %}
-				</li>
-				<li>
-					<hr class="dropdown-divider">
-				</li>
-			</div>
+				</a>
+			</li>
+			<li>
+				<hr class="dropdown-divider">
+			</li>
 			<li>
 				<a class="dropdown-item" href="">Action</a>
 			</li>
@@ -26,21 +26,21 @@
 	</li>
 {% endif %}
 
-{% if not is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_ADMIN') %}
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle text-danger py-lg-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			<i class="bi bi-radioactive text-danger me-1 fs-5" role="img"></i>
-			<span class="d-inline d-lg-none">{% trans %}header.menu.test{% endtrans %}</span>
+			<span class="d-inline d-lg-none">{% trans %}header.menu.admin{% endtrans %}</span>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-			<div class="d-none d-lg-block">
-				<li class="px-3">
+			<li>
+				<a class="dropdown-item" href="{{path('app_admin_index')}}">
 					{% trans %}header.menu.admin{% endtrans %}
-				</li>
-				<li>
-					<hr class="dropdown-divider">
-				</li>
-			</div>
+				</a>
+			</li>
+			<li>
+				<hr class="dropdown-divider">
+			</li>
 			<li>
 				<a class="dropdown-item" href="">Action 1</a>
 			</li>

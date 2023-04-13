@@ -9,6 +9,7 @@
 /vendor/
 /public/assets/bootstrap*
 /local
+/templates/index.html.twig
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
