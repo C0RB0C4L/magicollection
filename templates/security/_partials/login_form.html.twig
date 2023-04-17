@@ -15,11 +15,15 @@
 	{{form_widget(loginForm.password)}}
 </div>
 
-<div class="checkbox mb-3">
+<div class="mb-3 d-flex justify-content-between">
 	<label>
 		<input type="checkbox" name="_remember_me">
 		{% trans %}login.remember{% endtrans %}
 	</label>
+	<a href="{{ path('app_main_home') }}" class="small text-decoration-none" role="button">
+		<i class="bi bi-question-square me-1"></i>
+		{% trans %}login.forgotten{% endtrans %}
+	</a>
 </div>
 
 <div class="d-flex align-items-center justify-content-center mt-4 mb-0">

@@ -16,9 +16,9 @@
 
 					<h1 class="h3 mb-0 font-weight-normal">{% trans %}login{% endtrans %}</h1>
 
-					<a href="{{ path('app_main_home') }}" class="btn btn-outline-light" role="button">
-						<i class="bi bi-question-square me-1"></i>
-						{% trans %}login.forgotten{% endtrans %}
+					<a href="{{ path('app_main_home') }}" class="btn btn-outline-light btn-sm" role="button">
+						<i class="bi bi-ui-checks-grid me-1"></i>
+						{% trans %}account.create{% endtrans %}
 					</a>
 
 				</div>
@@ -41,16 +41,11 @@
 
 				</div>
 
-				<div class="card-footer py-3 d-flex justify-content-between">
-
+				<div class="card-footer py-3">						
+			
 					<a href="{{ path('app_main_home') }}" class="btn btn-outline-light" role="button">
 						<i class="bi bi-house-door me-1"></i>
 						{% trans %}home{% endtrans %}
-					</a>
-
-					<a href="{{ path('app_main_home') }}" class="btn btn-outline-light" role="button">
-						<i class="bi bi-ui-checks-grid me-1"></i>
-						{% trans %}account.create{% endtrans %}
 					</a>
 
 				</div>
