@@ -6,12 +6,15 @@
 
 {% block content %}
 
+	<h1>
+		{% trans %}heading.admin.panel{% endtrans %}
+	</h1>
+	<hr>
+
 	<div class="row gy-4">
 
 		<div class="col-lg-6 col-xl-3">
-
 			{% include "admin/_partials/users_card.html.twig" %}
-
 		</div>
 
 		<div class="col-lg-6 col-xl-3"></div>

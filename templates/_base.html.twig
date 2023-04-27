@@ -10,16 +10,16 @@
 
 		{% include "_core/layout/flash/flash.html.twig" %}
 
-		<div class="container py-5">
+		<div class="container py-5 bg-danger bg-opacity-25">
 			{% block content %}{% endblock %}
 		</div>
 
 	</main>
 
 	<footer>
-	{% block footer %}
-		{% include "_core/layout/footer/footer.html.twig" %}
-	{% endblock %}
+		{% block footer %}
+			{% include "_core/layout/footer/footer.html.twig" %}
+		{% endblock %}
 	</footer>
 
 {% endblock %}

@@ -1,11 +1,16 @@
 {# {% set flash = app.flashes %}
 {% if flash is not empty %} #}
 	{# <div class="container-fluid py-4 position-fixed" style="z-index:1025;"> #}
-	{% set position = 5 %}
+	{% set position = 0 %}
 		{% for type, messages in app.flashes %}
 			{% for message in messages %}
-			{% set position = position + 15 %}
-				<div class="alert border-{{type}} text-{{type}} bg-dark border border-2 py-1 my-2 rounded-3 shadow-sm w-50 position-fixed start-50 top-{{position}} translate-middle" style="z-index:1025;">
+			{% if loop.index == 1 %}
+			{% set position = position + 10 %}
+			{% else %}
+			{% set position = position + 10 %}
+			{% endif %}
+			
+				<div class="d-block d-lg-none w-90 alert border-{{type}} text-{{type}} bg-dark border border-2 py-1 my-2 rounded-3 shadow-sm position-fixed start-50 top-{{position}} translate-middle" style="z-index:1025;">
 					<div class="card-header py-2">
 
 						<h5 class="my-0">
@@ -20,11 +25,33 @@
 									<i class="bi bi-question-circle" role="img"></i>
 								{% endif %}
 							</span>
-							<span class="align-text-bottom">{{ message|raw }}</span>
+							<span class="align-text-bottom fs-6">{{ message|raw }}</span>
 						</h5>
 
 					</div>
 				</div>
+
+				<div class="d-none d-lg-block alert border-{{type}} text-{{type}} bg-dark border border-2 py-1 my-2 rounded-3 shadow-sm w-60 position-fixed start-50 top-{{position}} translate-middle" style="z-index:1025;">
+					<div class="card-header py-2">
+
+						<h5 class="my-0">
+							<span class="me-2">
+								{% if type == "success" %}
+									<i class="bi bi-check-circle" role="img"></i>
+								{% elseif type == "warning" %}
+									<i class="bi bi-exclamation-triangle" role="img"></i>
+								{% elseif type == "danger" %}
+									<i class="bi bi-x-circle" role="img"></i>
+								{% else %}
+									<i class="bi bi-question-circle" role="img"></i>
+								{% endif %}
+							</span>
+							<span class="align-text-bottom fs-6">{{ message|raw }}</span>
+						</h5>
+
+					</div>
+				</div>
+
 			{% endfor %}
 		{% endfor %}
 	{# </div> #}
