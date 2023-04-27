@@ -1,0 +1,9 @@
+<div class="row row-cols-1 gy-4">
+	{% if active is defined and active == "card_index" %}
+		<div class="col profile-card-active">
+		{% else %}
+			<div class="col">
+			{% endif %}
+			{% include "account/_partials/card_index.html.twig" %}
+		</div>
+	</div>

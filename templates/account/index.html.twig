@@ -1,0 +1,86 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.account{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1>
+		{% trans %}heading.account{% endtrans %}
+	</h1>
+	<hr>
+
+	<div class="row gy-4">
+
+		<div class="col-md-4 col-lg-4 col-xl-3">
+			{% include "account/_partials/menu.html.twig" with {'active': 'card_index'}%}
+		</div>
+
+		<div class="col-lg-8 col-xl-9">
+
+			<div class="card bg-dark border-0 rounded-3 shadow-sm text-white-50">
+				<div class="card-header py-3">
+					<h5 class="my-0">
+						{% trans %}account.settings{% endtrans %}
+					</h5>
+				</div>
+				<div class="card-body">
+
+					<div class="row mb-3">
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4">
+							<b class="align-middle">{% trans %}Username:{% endtrans %}</b>
+						</div>
+						<div class="ms-4 ms-sm-0 mt-2 mt-sm-0 col-12 col-sm-8 col-md-8 col-lg-8">
+							<button class="btn btn-sm btn-outline-light me-4 py-0 px-1 py-lg-1 px-lg-2 disabled">
+								<i class="bi bi-pencil-square"></i>
+							</button>
+							{{app.user.username}}
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4">
+							<b>{% trans %}Email:{% endtrans %}</b>
+						</div>
+						<div class="ms-4 ms-sm-0 mt-2 mt-sm-0 col-12 col-sm-8 col-md-8 col-lg-8">
+							<button class="btn btn-sm btn-outline-light me-4 py-0 px-1 py-lg-1 px-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdropEditEmail">
+								<i class="bi bi-pencil-square"></i>
+							</button>
+							{{app.user.email}}
+
+							{{ render(controller("App\\Controller\\AccountController::emailEdit")) }}
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4">
+							<b>{% trans %}Password:{% endtrans %}</b>
+						</div>
+						<div class="ms-4 ms-sm-0 mt-2 mt-sm-0 col-12 col-sm-8 col-md-8 col-lg-8">
+							<button class="btn btn-sm btn-outline-light me-4 py-0 px-1 py-lg-1 px-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdropEditPassword">
+								<i class="bi bi-pencil-square"></i>
+							</button>
+							&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;
+
+							{{ render(controller("App\\Controller\\AccountController::passwordEdit")) }}
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+{% endblock %}
+
+{# uncomment if the page is less than 100vh  #}
+{% block footer %}
+	<div class="fixed-bottom">
+		{{ parent() }}
+	</div>
+{% endblock %}

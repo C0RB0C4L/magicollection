@@ -1,0 +1,19 @@
+<div class="card bg-dark border-0 rounded-3 shadow-sm text-white-50">
+
+	<div class="card-body py-2">
+		<div class="d-flex justify-content-between align-items-center">
+			<span class="small">{% trans %}account.settings{% endtrans %}</span>
+			<div class="text-info">
+				<i class="fs-4 bi bi-gear"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="card-footer d-flex align-items-center justify-content-between small py-2">
+		<a class="stretched-link link-info text-decoration-none" href="{{path('app_account_index')}}">{% trans %}manage{% endtrans %}</a>
+		<div class="text-info">
+			<i class="bi bi-chevron-right"></i>
+		</div>
+	</div>
+
+</div>

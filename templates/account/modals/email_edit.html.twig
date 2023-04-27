@@ -1,0 +1,26 @@
+<div class="modal fade" id="staticBackdropEditEmail" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">{% trans %}heading.edit.email{% endtrans %}</h5>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+
+				{% form_theme form 'bootstrap_5_layout.html.twig' %}
+				{{form_start(form)}}
+
+				{{form_row(form.email.first, {'label':"email.new.first"})}}
+
+				{{form_row(form.email.second, {'label':"email.new.second"})}}
+
+				<button class="btn btn-info" type="submit" formaction="{{path('app_account_email_edit_ajax')}}">
+					{% trans %}change.email{% endtrans %}
+				</button>
+
+				{{form_end(form)}}
+
+			</div>
+		</div>
+	</div>
+</div>

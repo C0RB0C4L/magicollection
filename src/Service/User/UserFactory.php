@@ -4,7 +4,7 @@ namespace App\Service\User;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Security\UserRoleManager;
+use App\Security\UserSecurityManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserFactory implements UserFactoryInterface
@@ -29,7 +29,7 @@ final class UserFactory implements UserFactoryInterface
         $user = new User();
         $user->setUsername($username);
         $user->setEmail($email);
-        $user->setRoles([UserRoleManager::BASIC]);
+        $user->setRoles([UserSecurityManager::BASIC]);
         $user->setIsActive(true);
         $user->setIsVerified(true);
 
