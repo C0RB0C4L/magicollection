@@ -35,6 +35,7 @@
 		<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
 			<li>
 				<a class="dropdown-item" href="{{path('app_admin_index')}}">
+					<i class="bi bi-speedometer me-1" role="img"></i>
 					{% trans %}header.menu.admin{% endtrans %}
 				</a>
 			</li>
@@ -42,7 +43,10 @@
 				<hr class="dropdown-divider">
 			</li>
 			<li>
-				<a class="dropdown-item" href="">Action 1</a>
+				<a class="dropdown-item" href="{{path('app_admin_user_index')}}">
+					<i class="bi bi-person-lines-fill me-1" role="img"></i>
+					{% trans %}header.menu.admin.users{% endtrans %}
+				</a>
 			</li>
 			<li>
 				<a class="dropdown-item" href="">Action 2</a>

@@ -1,0 +1,91 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.admin.users{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1>
+		{% trans %}heading.admin.users{% endtrans %}
+	</h1>
+
+	<hr>
+	<div>
+		<a href="" class="btn btn-outline-info" role="btn">
+			create user
+		</a>
+	</div>
+	<hr>
+
+	<div class="row">
+		<div class="col">
+
+			<div class="card bg-dark border border-0 rounded-3 shadow-sm text-white-50 h-100">
+
+				<div class="card-header py-3">
+					<h3 class="my-0">
+						{% trans %}admin.users{% endtrans %}
+					</h3>
+				</div>
+
+				<div class="card-body d-flex flex-column justify-content-between">
+					<table class="table table-responsive table-dark table-striped table-sm small">
+						<thead>
+							<th>ID</th>
+							<th>username</th>
+							<th>email</th>
+							<th>clearance</th>
+							<th>active</th>
+							<th>verified</th>
+							<th>action</th>
+						</thead>
+						<tbody>
+							{% for user in users %}
+								<tr>
+									<th>{{user.id}}</th>
+									<td>{{user.username}}</td>
+									<td>{{user.email}}</td>
+									<td>
+										{% include "_core/renderer/roles.html.twig" with {'roles': user.roles}%}
+									</td>
+									<td>
+										{% include "_core/renderer/boolean_pill.html.twig" with {
+											'bool': user.isActive, 
+											'url_on': path("app_admin_user_activate", {id:user.id}), 
+											'url_off' : path("app_admin_user_deactivate", {id:user.id})
+											}
+										%}
+									</td>
+									<td>
+										{% include "_core/renderer/boolean_pill.html.twig" with {'bool': user.isVerified}%}
+									</td>
+									<td>
+										<a href="{{path('app_admin_user_edit', {id:user.id})}}" class="btn btn-sm btn-outline-light me-2 py-0 px-1" role="btn">
+											<i class="bi bi-pencil-square"></i>
+										</a>
+										<a href="" class="btn btn-sm btn-outline-danger py-0 px-1" role="btn">
+											<i class="bi bi-trash"></i>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}
+{# No "direct" use, serves as a base file for any new view #}
+{# uncomment if the page is less than 100vh #}
+{#
+	{% block footer %}
+		<div class="fixed-bottom">
+			{{ parent() }}
+		</div>
+	{% endblock %}
+#}

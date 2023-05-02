@@ -35,7 +35,7 @@ trait UserBaseTrait
 
 	public function isVerified(): ?bool
 	{
-		return $this->isActive;
+		return $this->isVerified;
 	}
 
 	public function setIsVerified(bool $isVerified): self

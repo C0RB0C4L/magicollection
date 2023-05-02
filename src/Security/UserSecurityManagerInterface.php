@@ -13,4 +13,10 @@ interface UserSecurityManagerInterface
     public function updatePassword(UserInterface $user, string $plainPassword);
 
     public function updateEmail(UserInterface $user, string $email);
+
+    public function activate(UserInterface $user);
+
+    public function deactivate(UserInterface $user);
+
+    public function isGranted(UserInterface $user, $attribute, $object = null);
 }

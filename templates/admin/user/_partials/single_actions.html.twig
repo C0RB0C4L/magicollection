@@ -1,0 +1,42 @@
+{% set user = form.vars.value %}
+
+<div class="row row-cols-1 gy-3">
+
+	<div class="col">
+		<span class="d-block">
+			{% trans %}password{% endtrans %}
+		</span>
+		<hr class="mt-0 mb-2">
+
+		<div class="row cols-1 cols-md-2">
+
+			<div class="col">
+				<a href="/" class="btn btn-light" role="btn">
+					{% trans %}password.reset{% endtrans %}
+				</a>
+			</div>
+		</div>
+	</div>
+
+	{% if not user.isVerified %}
+		<div class="col">
+			<span class="d-block">{% trans %}user.verification{% endtrans %}</span>
+			<hr class="mt-0 mb-2">
+
+			<div class="row cols-1 cols-md-2">
+
+				<div class="col">
+					<a href="/" class="btn btn-light" role="btn">
+						{% trans %}email.resend{% endtrans %}
+					</a>
+				</div>
+				<div class="col">
+					<a href="/" class="btn btn-outline-light" role="btn">
+						test
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+</div>

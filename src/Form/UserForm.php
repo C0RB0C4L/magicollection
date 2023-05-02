@@ -13,9 +13,8 @@ class UserForm extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('roles')
+            /* ->add('roles') */
             ->add('email')
-            ->add('password')
             ->add('isActive')
             ->add('isVerified')
         ;

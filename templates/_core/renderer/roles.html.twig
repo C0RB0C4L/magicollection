@@ -1,0 +1,12 @@
+{% for role in roles %}
+	{% set label = role|slice("ROLE_"|length, role|length) %}
+	{% if role == constant('App\\Security\\UserSecurityManager::ADMIN') %}
+		<span class="badge rounded-pill text-bg-danger">{{label}}</span>
+	{% endif %}
+	{% if role == constant('App\\Security\\UserSecurityManager::TESTER') %}
+		<span class="badge rounded-pill text-bg-warning">{{label}}</span>
+	{% endif %}
+	{% if role == constant('App\\Security\\UserSecurityManager::BASIC') %}
+		<span class="badge rounded-pill text-bg-primary">{{label}}</span>
+	{% endif %}
+{% endfor %}

@@ -1,0 +1,15 @@
+{% if url_back is not defined or url_back == "" %}
+
+	{% set referer = app.request.server.get('http-referer')|default('/') %}
+
+	{% if app.request.server.get("SERVER_NAME") in referer %}
+		{% set url_back = referer %}
+	{% else %}
+		{% set url_back = "/" %}
+	{% endif %}
+
+{% endif %}
+
+<a href="{{url_back}}" class="btn btn-outline-light mb-2" role="btn">
+	<i class="bi bi-box-arrow-up-left"></i>
+</a>
