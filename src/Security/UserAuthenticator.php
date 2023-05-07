@@ -67,13 +67,15 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator implements UserCh
 
             return;
         }
-        if (!$user->isActive()) {
-
-            throw new CustomUserMessageAccountStatusException('account.inactive');
-        }
+        
         if (!$user->isVerified()) {
 
             throw new CustomUserMessageAccountStatusException('account.unverified');
+        }
+
+        if (!$user->isActive()) {
+
+            throw new CustomUserMessageAccountStatusException('account.inactive');
         }
     }
 
