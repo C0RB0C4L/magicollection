@@ -23,3 +23,18 @@ $(".js-multiple").select2({
     selectionCssClass: "select2--small",
     dropdownCssClass: "select2--small",
 });
+
+
+flashMessageManagement()
+
+function flashMessageManagement() {
+
+    let flashMessages = document.getElementsByClassName("flash");
+    if (flashMessages !== null) {
+        for (let message of flashMessages) {
+            setTimeout(function () {
+                message.remove();
+            }, 5000)
+        }
+    }
+}
