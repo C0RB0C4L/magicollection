@@ -32,7 +32,7 @@ class PasswordEditForm extends AbstractType
                         new NotBlank(),
                         new Length([
                             'min' => UserCreateForm::PASSWORD_MIN,
-                            'max' => UserCreateForm::PASSWORD_MIN,
+                            'max' => UserCreateForm::PASSWORD_MAX,
                         ]),
                         new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
                     ],
@@ -43,7 +43,7 @@ class PasswordEditForm extends AbstractType
                         new NotBlank(),
                         new Length([
                             'min' => UserCreateForm::PASSWORD_MIN,
-                            'max' => UserCreateForm::PASSWORD_MIN,
+                            'max' => UserCreateForm::PASSWORD_MAX,
                         ]),
                         new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
                     ],

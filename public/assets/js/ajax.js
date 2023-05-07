@@ -6,7 +6,7 @@ profileAjaxEditPassword();
  */
 function profileAjaxEditPassword() {
 
-    let form = document.querySelector("form[name='password_form']");
+    let form = document.querySelector("form[name='password_edit_form']");
 
     if (form !== null) {
 
@@ -54,7 +54,7 @@ profileAjaxEditEmail();
  */
 function profileAjaxEditEmail() {
 
-    let form = document.querySelector("form[name='email_form']");
+    let form = document.querySelector("form[name='email_edit_form']");
 
     if (form !== null) {
 
