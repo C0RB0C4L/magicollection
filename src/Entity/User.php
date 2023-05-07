@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\UserBaseTrait;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['remove'])]
     private ?AccountCreationRequest $accountCreationRequest = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetPasswordRequest::class, cascade: ['remove'])]
+    private ?Collection $resetPasswordRequests = null;
 
     public function getId(): ?int
     {
@@ -147,5 +151,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->accountCreationRequest = $accountCreationRequest;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ResetPasswordRequest>
+     */
+    public function getResetPasswordRequests(): ?Collection
+    {
+        return $this->resetPasswordRequests;
     }
 }

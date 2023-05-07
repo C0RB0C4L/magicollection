@@ -155,8 +155,6 @@ class ResetPasswordController extends AbstractController
 
             return $this->redirectToRoute('app_check_email');
         }
-        dump($resetToken);
-        die;    
 
         $noreply = $this->getParameter("no_reply_sender");
 
