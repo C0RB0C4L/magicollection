@@ -28,7 +28,7 @@
 						<div class="mb-3">
 							{% trans %}login.already.logged{% endtrans %}
 							{{ app.user.username }};
-							<a href="{{ path('app_logout') }}">{% trans %}logout{% endtrans %}</a>
+							<a href="{{ path('app_logout') }}"> {% trans %}logout{% endtrans %}</a>
 						</div>
 					{% endif %}
 
@@ -43,7 +43,7 @@
 						{% trans %}home{% endtrans %}
 					</a>
 
-					<a href="/" class="btn btn-sm btn-outline-light" role="button">
+					<a href="{{path('app_registration_index')}}" class="btn btn-sm btn-outline-light" role="button">
 						<i class="bi bi-ui-checks-grid me-1"></i>
 						{% trans %}account.create{% endtrans %}
 					</a>

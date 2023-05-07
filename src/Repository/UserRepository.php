@@ -67,6 +67,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    public function findExistingMaster()
+    {
+        return $this->createQueryBuilder('u')
+            ->where("u.roles LIKE '%ROLE_MASTER%'")
+            ->getQuery()
+            ->getResult();
+    }
+
     public function countUsers()
     {
         return $this->createQueryBuilder('u')

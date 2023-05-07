@@ -12,7 +12,7 @@
 
 	<hr>
 	<div>
-		<a href="" class="btn btn-outline-info" role="btn">
+		<a href="{{path("app_admin_user_create")}}" class="btn btn-outline-info" role="btn">
 			create user
 		</a>
 	</div>
@@ -64,9 +64,9 @@
 										<a href="{{path('app_admin_user_edit', {id:user.id})}}" class="btn btn-sm btn-outline-light me-2 py-0 px-1" role="btn">
 											<i class="bi bi-pencil-square"></i>
 										</a>
-										<a href="" class="btn btn-sm btn-outline-danger py-0 px-1" role="btn">
-											<i class="bi bi-trash"></i>
-										</a>
+										{# <a href="" class="btn btn-sm btn-outline-danger py-0 px-1" role="btn">
+												<i class="bi bi-trash"></i>
+											</a> #}
 									</td>
 								</tr>
 							{% endfor %}

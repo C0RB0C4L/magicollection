@@ -1,5 +1,3 @@
-{% set user = form.vars.value %}
-
 <div class="row row-cols-1 gy-3">
 
 	<div class="col">
@@ -8,14 +6,18 @@
 		</span>
 		<hr class="mt-0 mb-2">
 
-		<div class="row cols-1 cols-md-2">
+		<div class="row cols-1 cols-md-2 cols-xl-3">
 
 			<div class="col">
-				<a href="/" class="btn btn-light" role="btn">
+				<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdropPasswordReset">
 					{% trans %}password.reset{% endtrans %}
-				</a>
+				</button>
 			</div>
+
 		</div>
+
+		{% include 'admin/user/modals/password_reset.html.twig' %}
+
 	</div>
 
 	{% if not user.isVerified %}
@@ -23,20 +25,43 @@
 			<span class="d-block">{% trans %}user.verification{% endtrans %}</span>
 			<hr class="mt-0 mb-2">
 
-			<div class="row cols-1 cols-md-2">
+			<div class="row cols-1 cols-md-2 cols-xl-3">
 
 				<div class="col">
-					<a href="/" class="btn btn-light" role="btn">
+					<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdropResendEmail">
 						{% trans %}email.resend{% endtrans %}
-					</a>
+					</button>
 				</div>
 				<div class="col">
-					<a href="/" class="btn btn-outline-light" role="btn">
-						test
-					</a>
+					<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdropManualVerification">
+						{% trans %}verification.manual{% endtrans %}
+					</button>
 				</div>
 			</div>
 		</div>
+
+		{% include 'admin/user/modals/resend_email.html.twig' %}
+		{% include 'admin/user/modals/manual_verification.html.twig' %}
+
 	{% endif %}
+
+	<div class="col">
+
+		<span class="d-block">{% trans %}danger.zone{% endtrans %}</span>
+		<hr class="mt-0 mb-2">
+
+		<div class="row cols-1 cols-md-2 cols-xl-3">
+
+			<div class="col">
+				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropUserDelete">
+					{% trans %}user.delete{% endtrans %}
+				</button>
+			</div>
+
+		</div>
+
+		{% include 'admin/user/modals/user_delete.html.twig' %}
+
+	</div>
 
 </div>

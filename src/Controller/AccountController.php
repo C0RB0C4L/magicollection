@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Form\EmailForm;
-use App\Form\PasswordForm;
+use App\Form\EmailEditForm;
+use App\Form\PasswordEditForm;
 use App\Repository\UserRepository;
 use App\Security\UserSecurityManagerInterface;
 use App\Service\FlashMessageService;
@@ -26,7 +26,7 @@ class AccountController extends AbstractController
     #[Route('/edit-password', name: 'password_edit_ajax')]
     public function passwordEdit(Request $request, UserSecurityManagerInterface $security): Response
     {
-        $form = $this->createForm(PasswordForm::class);
+        $form = $this->createForm(PasswordEditForm::class);
 
         if ($request->isXmlHttpRequest() && $this->getUser()) {
 
@@ -60,7 +60,7 @@ class AccountController extends AbstractController
     #[Route('/edit-email', name: 'email_edit_ajax')]
     public function emailEdit(Request $request, UserSecurityManagerInterface $security): Response
     {
-        $form = $this->createForm(EmailForm::class);
+        $form = $this->createForm(EmailEditForm::class);
 
         if ($request->isXmlHttpRequest() && $this->getUser()) {
 

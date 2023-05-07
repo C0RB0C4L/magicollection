@@ -1,0 +1,13 @@
+{% if bool %}
+	{% if url_off is defined and url_off != "" %}
+		<a href="{{url_off}}" class="btn btn-sm btn-success text-light text-decoration-none">{% trans %}active{% endtrans %}</a>
+	{% else %}
+		<span class="badge rounded-pill text-bg-success">{% trans %}active{% endtrans %}</span>
+	{% endif %}
+{% else %}
+	{% if url_on is defined and url_on != "" %}
+		<a href="{{url_on}}" class="btn btn-sm btn-danger text-light text-decoration-none">{% trans %}inactive{% endtrans %}</a>
+	{% else %}
+		<span class="badge rounded-pill text-bg-danger">{% trans %}inactive{% endtrans %}</span>
+	{% endif %}
+{% endif %}

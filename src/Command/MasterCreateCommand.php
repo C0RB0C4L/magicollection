@@ -14,10 +14,10 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:user:create',
-    description: "Creates a User account. \r\n  The desired password will be asked if the user doesn't already exist."
+    name: 'app:master:create',
+    description: "Creates a User account with highest privilege. \r\n  The desired password will be asked if the user doesn't already exist."
 )]
-class UserCreateCommand extends Command
+class MasterCreateCommand extends Command
 {
     private const ARG_USERNAME = "username";
     private const ARG_EMAIL = "email";
@@ -44,6 +44,14 @@ class UserCreateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        
+        $existingMaster = $this->userRepo->findExistingMaster();
+
+        if($existingMaster) {
+            $io->error("A Master exists.");
+
+            return Command::FAILURE;
+        }
 
         $username = $input->getArgument(self::ARG_USERNAME);
         $email = $input->getArgument(self::ARG_EMAIL);
@@ -57,6 +65,7 @@ class UserCreateCommand extends Command
             return Command::FAILURE;
         }
 
+
         $helper = $this->getHelper("question");
         $question = new Question(
             "\r\n <info>Please enter a password for this user</info> "
@@ -68,7 +77,7 @@ class UserCreateCommand extends Command
 
         $plainPassword = $helper->ask($input, $output, $question);
 
-        $this->userFactory->createSimpleUser($username, $email, $plainPassword, true, true);
+        $this->userFactory->createMasterUser($username, $email, $plainPassword, true, true);
 
         $io->success("User created: $username - $email");
 

@@ -1,13 +1,13 @@
 {% if bool %}
 	{% if url_off is defined and url_off != "" %}
-		<a href="{{url_off}}" class="badge rounded-pill text-bg-success text-decoration-none">OUI</a>
+		<a href="{{url_off}}" class="badge rounded-pill text-bg-success text-decoration-none">{% trans %}YES{% endtrans %}</a>
 	{% else %}
-		<span class="badge rounded-pill text-bg-success">OUI</span>
+		<span class="badge rounded-pill text-bg-success">{% trans %}YES{% endtrans %}</span>
 	{% endif %}
 {% else %}
 	{% if url_on is defined and url_on != "" %}
-		<a href="{{url_on}}" class="badge rounded-pill text-bg-danger text-decoration-none">NON</a>
+		<a href="{{url_on}}" class="badge rounded-pill text-bg-danger text-decoration-none">{% trans %}NO{% endtrans %}</a>
 	{% else %}
-		<span class="badge rounded-pill text-bg-danger">NON</span>
+		<span class="badge rounded-pill text-bg-danger">{% trans %}NO{% endtrans %}</span>
 	{% endif %}
 {% endif %}

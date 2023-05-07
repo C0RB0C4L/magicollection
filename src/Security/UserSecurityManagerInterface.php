@@ -18,5 +18,17 @@ interface UserSecurityManagerInterface
 
     public function deactivate(UserInterface $user);
 
+    public function verify(UserInterface $user, int $accountCreationId);
+
     public function isGranted(UserInterface $user, $attribute, $object = null);
+
+    public function preventSelfHarm(UserInterface $target, UserInterface $current);
+    
+    public function protectMaster(UserInterface $target);
+
+    public function protectBrothers(UserInterface $target, UserInterface $current);
+
+    public function protectBrothersAndMaster(UserInterface $target, UserInterface $current);
+
+    public function generatePassword(): string;
 }

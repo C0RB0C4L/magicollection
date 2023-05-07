@@ -2,11 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -14,13 +12,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class PasswordForm extends AbstractType
+class PasswordEditForm extends AbstractType
 {
-    private const MIN_LENGTH = 8;
-    private const MAX_LENGTH = 36;
-    /* public const REGEX_PASSWORD = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{4,}$/"; */
-    public const REGEX_PASSWORD = "/[a-z]/";
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,10 +31,10 @@ class PasswordForm extends AbstractType
                     'constraints' => [
                         new NotBlank(),
                         new Length([
-                            'min' => self::MIN_LENGTH,
-                            'max' => self::MAX_LENGTH,
+                            'min' => UserCreateForm::PASSWORD_MIN,
+                            'max' => UserCreateForm::PASSWORD_MIN,
                         ]),
-                        new Regex(['pattern' => self::REGEX_PASSWORD]),
+                        new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
                     ],
                 ],
                 'second_options' => [
@@ -49,10 +42,10 @@ class PasswordForm extends AbstractType
                     'constraints' => [
                         new NotBlank(),
                         new Length([
-                            'min' => self::MIN_LENGTH,
-                            'max' => self::MAX_LENGTH,
+                            'min' => UserCreateForm::PASSWORD_MIN,
+                            'max' => UserCreateForm::PASSWORD_MIN,
                         ]),
-                        new Regex(['pattern' => self::REGEX_PASSWORD]),
+                        new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
                     ],
                 ],
                 'mapped' => false,

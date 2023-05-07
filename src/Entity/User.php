@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['remove'])]
+    private ?AccountCreationRequest $accountCreationRequest = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +128,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getAccountCreationRequest(): ?AccountCreationRequest
+    {
+        return $this->accountCreationRequest;
+    }
+
+    public function setAccountCreationRequest(AccountCreationRequest $accountCreationRequest): self
+    {
+        // set the owning side of the relation if necessary
+        if ($accountCreationRequest->getUser() !== $this) {
+            $accountCreationRequest->setUser($this);
+        }
+
+        $this->accountCreationRequest = $accountCreationRequest;
 
         return $this;
     }

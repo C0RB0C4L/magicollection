@@ -1,0 +1,17 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{form_start(form)}}
+
+{{form_row(form.username)}}
+{{form_row(form.email)}}
+{{form_row(form.password)}}
+
+<div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+	<button class="btn btn-success w-100" type="submit">
+		<i class="bi bi-box-arrow-in-right me-1"></i>
+		{% trans %}register{% endtrans %}
+	</button>
+</div>
+
+
+
+{{form_end(form)}}

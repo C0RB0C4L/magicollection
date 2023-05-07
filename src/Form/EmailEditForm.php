@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class EmailForm extends AbstractType
+class EmailEditForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
