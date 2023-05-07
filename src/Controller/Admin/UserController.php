@@ -57,16 +57,26 @@ class UserController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'edit')]
-    public function edit(int $id, Request $request, UserRepository $userRepo): Response
+    public function edit(int $id, Request $request, UserRepository $userRepo, UserSecurityManagerInterface $security): Response
     {
         $user = $userRepo->find($id);
 
         if ($user !== null) {
 
+            if (
+                $security->protectMaster($user, $this->getUser())
+                || $security->preventSelfHarm($user, $this->getUser())
+            ) {
+                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
+
+                return $this->redirectToRoute("app_admin_user_index");
+            }
+
             $form = $this->createForm(UserEditForm::class, $user);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 $userRepo->save($user, true);
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);

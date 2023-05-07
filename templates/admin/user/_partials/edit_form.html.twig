@@ -3,7 +3,8 @@
 
 {{form_row(form.username)}}
 {{form_row(form.email)}}
-	
+
+{{form_row(form.roles, {"attr":{"class":"js-multiple"}})}}
 <button class="btn btn-info" type="submit">
 	{% trans %}edit.user{% endtrans %}
 </button>

@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface UserSecurityManagerInterface
 {
-    public function getRolesAll(): array;
+    public static function getRolesAll(): array;
 
     public function updateRole(UserInterface $user, string $role, bool $save);
 

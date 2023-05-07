@@ -42,13 +42,12 @@ final class UserSecurityManager implements UserSecurityManagerInterface
     }
 
 
-    public function getRolesAll(): array
+    public static function getRolesAll(): array
     {
         return [
-            self::BASIC,
-            self::TESTER,
             self::ADMIN,
-            self::MASTER
+            self::TESTER,
+            self::BASIC
         ];
     }
 
