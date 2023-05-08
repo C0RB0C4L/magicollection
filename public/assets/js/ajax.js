@@ -1,10 +1,13 @@
-profileAjaxEditPassword();
+ajaxProfileEditPassword();
+ajaxProfileEditEmail();
+
 
 /**
- * @description Handles all the edit password process on the account page.
+ * @description Handles all the edit-password process on the account page.
+ * 
  * @return void
  */
-function profileAjaxEditPassword() {
+function ajaxProfileEditPassword() {
 
     let form = document.querySelector("form[name='password_edit_form']");
 
@@ -32,7 +35,7 @@ function profileAjaxEditPassword() {
                         if (response.status === 0) {
                             let DOMResponse = new DOMParser().parseFromString(response.body, "text/html");
                             parentDom.innerHTML = DOMResponse.getElementById(parentId).innerHTML;
-                            profileAjaxEditPassword();
+                            ajaxProfileEditPassword();
                             formSubmissionSpinner();
                         }
 
@@ -46,13 +49,12 @@ function profileAjaxEditPassword() {
 }
 
 
-profileAjaxEditEmail();
-
 /**
- * @description Handles all the edit email process on the account page.
+ * @description Handles all the edit-email process on the account page.
+ * 
  * @return void
  */
-function profileAjaxEditEmail() {
+function ajaxProfileEditEmail() {
 
     let form = document.querySelector("form[name='email_edit_form']");
 
@@ -80,7 +82,7 @@ function profileAjaxEditEmail() {
                         if (response.status === 0) {
                             let DOMResponse = new DOMParser().parseFromString(response.body, "text/html");
                             parentDom.innerHTML = DOMResponse.getElementById(parentId).innerHTML;
-                            profileAjaxEditEmail();
+                            ajaxProfileEditEmail();
                             formSubmissionSpinner();
                         }
 
@@ -92,4 +94,3 @@ function profileAjaxEditEmail() {
         }
     }
 }
-

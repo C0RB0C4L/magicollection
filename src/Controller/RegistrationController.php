@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\UserCreateForm;
+use App\Form\RegistrationForm;
 use App\Repository\AccountCreationRequestRepository;
 use App\Security\UserSecurityManagerInterface;
 use App\Service\FlashMessageService;
@@ -18,7 +18,7 @@ class RegistrationController extends AbstractController
     #[Route('', name: 'index')]
     public function index(Request $request, UserFactoryInterface $userFactory): Response
     {
-        $form = $this->createForm(UserCreateForm::class);
+        $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

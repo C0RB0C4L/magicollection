@@ -15,10 +15,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class UserCreateForm extends AbstractType
+class RegistrationForm extends AbstractType
 {
-
-
     public const USERNAME_MIN = 4;
     public const USERNAME_MAX = 36;
     public const USERNAME_REGEX = "/[a-z]/";

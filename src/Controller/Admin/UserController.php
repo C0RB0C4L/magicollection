@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Form\UserCreateForm;
+use App\Form\RegistrationForm;
 use App\Form\UserEditForm;
 use App\Repository\UserRepository;
 use App\Security\UserSecurityManagerInterface;
@@ -31,7 +31,7 @@ class UserController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request, UserFactoryInterface $userFactory): Response
     {
-        $form = $this->createForm(UserCreateForm::class);
+        $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
