@@ -1,0 +1,22 @@
+<div class="card border-0 border-start border-4 border-primary bg-dark rounded-3 shadow-sm text-white-50">
+
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-center">
+			<div class="me-3">
+				<span class="small">{% trans %}news.count{% endtrans %}</span>
+				<div class="text-primary fs-4 fw-bold">{{newsCount}}</div>
+			</div>
+			<div class="text-primary">
+				<i class="fs-1 bi bi-newspaper"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="card-footer d-flex align-items-center justify-content-between small py-2">
+		<a class="stretched-link link-primary text-decoration-none" href="{{path('app_admin_news_index')}}">{% trans %}see{% endtrans %}</a>
+		<div class="text-primary">
+			<i class="bi bi-chevron-right"></i>
+		</div>
+	</div>
+
+</div>

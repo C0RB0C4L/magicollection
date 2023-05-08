@@ -1,0 +1,19 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{form_start(form)}}
+
+{{form_row(form.title)}}
+{{form_row(form.summary)}}
+{{form_row(form.content)}}
+
+
+<div class="d-flex justify-content-between">
+	<button class="btn btn-info" type="submit">
+		{% trans %}create.news{% endtrans %}
+	</button>
+
+	<a href="{{path("app_admin_news_index")}}" class="btn btn-outline-light">
+		{% trans %}return{% endtrans %}
+	</a>
+</div>
+
+{{form_end(form)}}

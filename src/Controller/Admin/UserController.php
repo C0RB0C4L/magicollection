@@ -196,7 +196,7 @@ class UserController extends AbstractController
                 return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
             }
 
-            $userRepo->remove($user, true);
+            $userRepo->remove($user, true); /** @todo use the SecurityManager for that */
 
             $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
         } else {

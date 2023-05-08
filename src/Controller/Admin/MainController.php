@@ -14,9 +14,11 @@ class MainController extends AbstractController
     public function index(AdminDashboardInterface $dashboard): Response
     {
         $userCount = $dashboard->getUsersCount();
+        $newsCount = $dashboard->getNewsCount();
 
         return $this->render('admin/index.html.twig', [
-            "userCount" => $userCount
+            "userCount" => $userCount,
+            "newsCount" => $newsCount
         ]);
     }
 }

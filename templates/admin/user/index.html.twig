@@ -13,7 +13,7 @@
 	<hr>
 	<div>
 		<a href="{{path("app_admin_user_create")}}" class="btn btn-outline-info" role="btn">
-			create user
+			{% trans %}user.create{% endtrans %}
 		</a>
 	</div>
 	<hr>
@@ -23,22 +23,16 @@
 
 			<div class="card bg-dark border border-0 rounded-3 shadow-sm text-white-50 h-100">
 
-{# 				<div class="card-header py-3">
-					<h3 class="my-0">
-						{% trans %}admin.users{% endtrans %}
-					</h3>
-				</div> #}
-
 				<div class="card-body d-flex flex-column justify-content-between">
 					<table class="table table-responsive table-dark table-striped table-sm small js-table">
 						<thead>
 							<th>ID</th>
-							<th>username</th>
-							<th>email</th>
-							<th>clearance</th>
-							<th>active</th>
-							<th>verified</th>
-							<th>action</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Clearance</th>
+							<th>Active</th>
+							<th>Verified</th>
+							<th>Action</th>
 						</thead>
 						<tbody>
 							{% for user in users %}
@@ -64,9 +58,6 @@
 										<a href="{{path('app_admin_user_edit', {id:user.id})}}" class="btn btn-sm btn-outline-light me-2 py-0 px-1" role="btn">
 											<i class="bi bi-pencil-square"></i>
 										</a>
-										{# <a href="" class="btn btn-sm btn-outline-danger py-0 px-1" role="btn">
-												<i class="bi bi-trash"></i>
-											</a> #}
 									</td>
 								</tr>
 							{% endfor %}
