@@ -31,10 +31,10 @@ class PasswordEditForm extends AbstractType
                     'constraints' => [
                         new NotBlank(),
                         new Length([
-                            'min' => UserCreateForm::PASSWORD_MIN,
-                            'max' => UserCreateForm::PASSWORD_MAX,
+                            'min' => RegistrationForm::PASSWORD_MIN,
+                            'max' => RegistrationForm::PASSWORD_MAX,
                         ]),
-                        new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
+                        new Regex(['pattern' => RegistrationForm::PASSWORD_REGEX]),
                     ],
                 ],
                 'second_options' => [
@@ -42,10 +42,10 @@ class PasswordEditForm extends AbstractType
                     'constraints' => [
                         new NotBlank(),
                         new Length([
-                            'min' => UserCreateForm::PASSWORD_MIN,
-                            'max' => UserCreateForm::PASSWORD_MAX,
+                            'min' => RegistrationForm::PASSWORD_MIN,
+                            'max' => RegistrationForm::PASSWORD_MAX,
                         ]),
-                        new Regex(['pattern' => UserCreateForm::PASSWORD_REGEX]),
+                        new Regex(['pattern' => RegistrationForm::PASSWORD_REGEX]),
                     ],
                 ],
                 'mapped' => false,
