@@ -205,13 +205,41 @@
 }
 .text-bg-purple {
 	background-color: purple !important;
-	color: #fff !important;
+	color: white !important;
+}
+.text-purple {
+	color: purple !important;
+}
+.text-purple-50 {
+	color: rgba(128, 0, 128, 0.500) !important;
 }
 .text-bg-orange {
 	background-color: orange !important;
-	color: #000 !important;
+	color: black !important;
+}
+.text-orange {
+	color: orange !important;
+}
+.text-orange-50 {
+	color: rgba(255, 166, 0, 0.500) !important;
 }
 .text-bg-lightning {
 	background-color: lightseagreen !important;
-	color: #000 !important;
+	color: black !important;
+}
+.text-lightning {
+	color: lightseagreen !important;
+}
+.text-lightning-50 {
+	color: rgba(32, 178, 171, 0.500) !important;
+}
+.text-bg-pink {
+	background-color: hotpink !important;
+	color: white !important;
+}
+.text-pink {
+	color: hotpink !important;
+}
+.text-pink-50 {
+	color: rgba(255, 105, 180, 0.500) !important;
 }
