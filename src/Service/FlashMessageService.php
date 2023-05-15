@@ -8,7 +8,7 @@ final class FlashMessageService
     public const TYPE_SUCCESS = "success";
     public const TYPE_WARNING = "warning";
     public const TYPE_ERROR = "danger";
-    public const TYPE_NOTICE = "info";
+    public const TYPE_INFO = "info";
 
     // used as a default message in the absence 
     public const MSG_SUCCESS = "flash.default.success";

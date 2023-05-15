@@ -2,7 +2,9 @@
 
 namespace App\Command;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\UserSecurityManager;
 use App\Service\User\UserFactoryInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -56,7 +58,7 @@ class MasterCreateCommand extends Command
         $username = $input->getArgument(self::ARG_USERNAME);
         $email = $input->getArgument(self::ARG_EMAIL);
 
-        $existingUsers = $this->userRepo->findExistingUsers($username, $email);
+        $existingUsers = $this->userRepo->findBy(["username" => $username, "email" => $email]);
 
         if ($existingUsers !== []) {
 
@@ -77,7 +79,12 @@ class MasterCreateCommand extends Command
 
         $plainPassword = $helper->ask($input, $output, $question);
 
-        $this->userFactory->createMasterUser($username, $email, $plainPassword, true, true);
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPassword($plainPassword);
+
+        $this->userFactory->createUser($user, [UserSecurityManager::MASTER],  true, true);
 
         $io->success("User created: $username - $email");
 

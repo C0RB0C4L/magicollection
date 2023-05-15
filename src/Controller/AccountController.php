@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\EmailEditForm;
 use App\Form\PasswordEditForm;
-use App\Repository\UserRepository;
 use App\Security\UserSecurityManagerInterface;
 use App\Service\FlashMessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccountController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('account/index.html.twig', []);
     }

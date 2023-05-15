@@ -1,0 +1,8 @@
+<p>
+	account creation request
+</p>
+
+<p>
+	{% set registrationId = accountCreationRequest.selector ~ '.' ~ accountCreationRequest.selector %}
+	<a href="{{url("app_registration_check", {registrationId:registrationId})}}">valider le compte</a>
+</p>

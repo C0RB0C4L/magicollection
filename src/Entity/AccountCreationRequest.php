@@ -25,7 +25,7 @@ class AccountCreationRequest
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $confirmedAt = null;
 
-    #[ORM\OneToOne(inversedBy: 'accountCreationRequest')]
+    #[ORM\OneToOne(inversedBy: 'accountCreationRequest', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

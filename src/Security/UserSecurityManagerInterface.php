@@ -2,33 +2,38 @@
 
 namespace App\Security;
 
+use App\Entity\AccountCreationRequest;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface UserSecurityManagerInterface
 {
     public static function getRolesAll(): array;
 
-    public function updateRole(UserInterface $user, string $role, bool $save);
-
-    public function updatePassword(UserInterface $user, string $plainPassword);
-
-    public function updateEmail(UserInterface $user, string $email);
+    public function updateRoles(UserInterface $user, string $role, bool $save);
 
     public function activate(UserInterface $user);
 
     public function deactivate(UserInterface $user);
 
-    public function verify(UserInterface $user, int $accountCreationId);
+    public function verify(AccountCreationRequest $accountCreationRequest);
 
-    public function isGranted(UserInterface $user, $attribute, $object = null);
-
-    public function preventSelfHarm(UserInterface $target, UserInterface $current);
+    public function updateEmail(UserInterface $user, string $email);
     
-    public function protectMaster(UserInterface $target);
+    public function updatePassword(UserInterface $user, string $plainPassword);
 
-    public function protectBrothers(UserInterface $target, UserInterface $current);
+    public function regeneratePassword(UserInterface $user): string;
 
-    public function protectBrothersAndMaster(UserInterface $target, UserInterface $current);
+    public function delete(UserInterface $user);
 
-    public function generatePassword(): string;
+    public function isGranted(UserInterface $user, $attribute, $object = null): bool;
+
+    public function isMaster(UserInterface $user): bool;
+
+    public function isAdmin(UserInterface $user): bool;
+    
+    public function protectSelf(UserInterface $target, UserInterface $current): bool;
+
+    public function protectSelfAndMaster(UserInterface $target, UserInterface $current): bool;
+
+    public function protectAll(UserInterface $target, UserInterface $current): bool;
 }

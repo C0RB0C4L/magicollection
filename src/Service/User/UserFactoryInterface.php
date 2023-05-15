@@ -7,13 +7,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface UserFactoryInterface
 {
-
     /**
-     * The `$username` and `$email` must be unique.
+     * `$user` is generated through the registration form
      */
-    public function createSimpleUser(string $username, string $email, string $password, bool $active, bool $verified): ?User;
-
-    public function createMasterUser(string $username, string $email, string $password, bool $active, bool $verified): ?User;
-
-    public function accountCreationRequest(UserInterface|User $user);
+    public function createUser(UserInterface|User $user, array $roles, bool $active, bool $verified): ?User;
 }

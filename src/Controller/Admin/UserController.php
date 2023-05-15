@@ -5,8 +5,9 @@ namespace App\Controller\Admin;
 use App\Form\RegistrationForm;
 use App\Form\UserEditForm;
 use App\Repository\UserRepository;
+use App\Security\UserSecurityManager;
 use App\Security\UserSecurityManagerInterface;
-use App\Service\Email\MailerServiceInterface;
+use App\Service\MailerServiceInterface;
 use App\Service\FlashMessageService;
 use App\Service\User\UserFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,12 @@ class UserController extends AbstractController
     #[Route('', name: 'index')]
     public function index(UserRepository $userRepo): Response
     {
-        $users = $userRepo->findAll();
+        if ($this->isGranted(UserSecurityManager::MASTER)) {
+
+            $users = $userRepo->findAll();
+        } else {
+            $users = $userRepo->findAllButMaster();
+        }
 
         return $this->render('admin/user/index.html.twig', [
             "users" => $users
@@ -36,17 +42,17 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $username = $form->get('username')->getData();
-            $plainPassword = $form->get('password')->getData();
-            $email = $form->get('email')->getData();
+            $userToCreate = $form->getData();
+            // bypasses the accountCreationRequest entity process and is already verified and active
+            $createdUser = $userFactory->createUser($userToCreate, [UserSecurityManager::BASIC], true, true);
 
-            $user = $userFactory->createSimpleUser($username, $email, $plainPassword, true, true);
-
-            if ($user !== null) {
+            if ($createdUser !== null) {
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
 
-                return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
+                return $this->redirectToRoute("app_admin_user_edit", ["id" => $createdUser->getId()]);
+            } else {
+                $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
             }
         }
 
@@ -63,11 +69,8 @@ class UserController extends AbstractController
 
         if ($user !== null) {
 
-            if (
-                $security->protectMaster($user, $this->getUser())
-                || $security->preventSelfHarm($user, $this->getUser())
-            ) {
-                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
+            if ($security->protectSelfAndMaster($user, $this->getUser())) {
+                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::TYPE_WARNING);
 
                 return $this->redirectToRoute("app_admin_user_index");
             }
@@ -77,6 +80,7 @@ class UserController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
+                $user = $form->getData();
                 $userRepo->save($user, true);
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
@@ -100,15 +104,6 @@ class UserController extends AbstractController
 
         if ($user !== null) {
 
-            if (
-                $security->protectBrothersAndMaster($user, $this->getUser())
-                || $security->preventSelfHarm($user, $this->getUser())
-            ) {
-                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
-
-                return $this->redirectToRoute("app_admin_user_index");
-            }
-
             $security->activate($user);
 
             $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
@@ -127,12 +122,8 @@ class UserController extends AbstractController
 
         if ($user !== null) {
 
-            if (
-                $security->protectBrothersAndMaster($user, $this->getUser())
-                || $security->preventSelfHarm($user, $this->getUser())
-            ) {
-
-                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
+            if ($security->protectAll($user, $this->getUser())) {
+                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::TYPE_WARNING);
 
                 return $this->redirectToRoute("app_admin_user_index");
             }
@@ -155,16 +146,14 @@ class UserController extends AbstractController
 
         if ($user !== null) {
 
-            if ($security->preventSelfHarm($user, $this->getUser())) {
+            if ($security->protectAll($user, $this->getUser())) {
+                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::TYPE_WARNING);
 
-                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
-
-                return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
+                return $this->redirectToRoute("app_admin_user_index");
             }
 
-            $newPassword = $security->generatePassword();
-            $security->updatePassword($user, $newPassword);
-            $email = $mailer->sendManualResetPassword($user, $newPassword);
+            $newPassword = $security->regeneratePassword($user);
+            $email = $mailer->sendManualPasswordResetEmail($user, $newPassword);
 
             if ($email) {
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
@@ -186,17 +175,13 @@ class UserController extends AbstractController
 
         if ($user !== null) {
 
-            if (
-                $security->protectBrothersAndMaster($user, $this->getUser())
-                || $security->preventSelfHarm($user, $this->getUser())
-            ) {
+            if ($security->protectAll($user, $this->getUser())) {
+                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::TYPE_WARNING);
 
-                $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::MSG_WARNING);
-
-                return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
+                return $this->redirectToRoute("app_admin_user_index");
             }
 
-            $userRepo->remove($user, true); /** @todo use the SecurityManager for that */
+            $security->delete($user);
 
             $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
         } else {
@@ -208,15 +193,15 @@ class UserController extends AbstractController
 
 
     #[Route('/{id}/verify', name: 'verify')]
-    public function verify(int $id, UserRepository $userRepo, UserSecurityManagerInterface $security): Response
+    public function verify(int $id, UserRepository $userRepo, UserSecurityManagerInterface $security, MailerServiceInterface $mailer): Response
     {
         $user = $userRepo->find($id);
 
         if ($user !== null && $user->getAccountCreationRequest() !== null) {
 
-            $accountCreationId = $user->getAccountCreationRequest()->getId();
-            $security->verify($user, $accountCreationId);
-
+            $accountCreationRequest = $user->getAccountCreationRequest();
+            $security->verify($accountCreationRequest);
+            $mailer->sendAccountCreationRequestConfirmed($accountCreationRequest);
             $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
 
             return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
@@ -230,10 +215,20 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/{id}/resend-email', name: 'resend_email')]
-    public function resendVerification(int $id, UserRepository $userRepo, UserSecurityManagerInterface $security): Response
+    #[Route('/{id}/resend-verification-email', name: 'resend_email')]
+    public function resendVerification(int $id, UserRepository $userRepo, MailerServiceInterface $mailer): Response
     {
-        $this->addFlash(FlashMessageService::TYPE_NOTICE, FlashMessageService::MSG_INFO);
+        $user = $userRepo->find($id);
+
+        if ($user !== null && $user->getAccountCreationRequest() !== null) {
+
+            $accountCreationRequest = $user->getAccountCreationRequest();
+            $mailer->sendAccountCreationRequestEmail($accountCreationRequest);
+
+            $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
+        } else {
+            $this->addFlash(FlashMessageService::MSG_ERROR, FlashMessageService::MSG_ERROR);
+        }
 
         return $this->redirectToRoute("app_admin_user_edit", ["id" => $id]);
     }

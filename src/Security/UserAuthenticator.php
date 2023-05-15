@@ -25,6 +25,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator implements UserCh
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    public const HOME_ROUTE = "app_home";
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
@@ -52,7 +53,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator implements UserCh
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_main_home'));
+        return new RedirectResponse($this->urlGenerator->generate(self::HOME_ROUTE));
         throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 
@@ -67,7 +68,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator implements UserCh
 
             return;
         }
-        
+
         if (!$user->isVerified()) {
 
             throw new CustomUserMessageAccountStatusException('account.unverified');

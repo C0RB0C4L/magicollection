@@ -6,7 +6,8 @@ use App\Form\RegistrationForm;
 use App\Repository\AccountCreationRequestRepository;
 use App\Security\UserSecurityManagerInterface;
 use App\Service\FlashMessageService;
-use App\Service\User\UserFactoryInterface;
+use App\Service\MailerServiceInterface;
+use App\Service\User\RegistrationFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,24 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(Request $request, UserFactoryInterface $userFactory): Response
+    public function index(Request $request, RegistrationFactoryInterface $factory, MailerServiceInterface $mailer): Response
     {
         $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $username = $form->get('username')->getData();
-            $plainPassword = $form->get('password')->getData();
-            $email = $form->get('email')->getData();
+            $userToCreate = $form->getData();
+            $accountRequest = $factory->createAccountRequest($userToCreate);
 
-            $user = $userFactory->createSimpleUser($username, $email, $plainPassword, false, false);
-            //$user = $form->getData();
+            if ($accountRequest !== null) {
 
-            if ($user !== null) {
-                $request = $userFactory->accountCreationRequest($user);
+                $mailer->sendAccountCreationRequestEmail($accountRequest);
 
-                return $this->render("registration/success.html.twig", []);
+                return $this->redirectToRoute("app_registration_success", [
+                    "userId" => $accountRequest->getSelector()
+                ]);
             } else {
 
                 $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
@@ -45,10 +45,35 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/success', name: 'success')]
+    public function success(Request $request, AccountCreationRequestRepository $accountCreationRepo): Response
+    {
+        // is sent as GET parameter from the registration index on success
+        $requestParameter = $request->get("userId");
+
+        $accountRequest = $accountCreationRepo->findOneBy(["selector" => $requestParameter]);
+
+        if ($accountRequest !== null) {
+
+            return $this->render("registration/success.html.twig", []);
+        } else {
+
+            $this->addFlash(FlashMessageService::MSG_ERROR, FlashMessageService::MSG_ERROR);
+
+            return $this->redirectToRoute("app_registration_index");
+        }
+    }
+
 
     #[Route('/check', name: 'check')]
-    public function check(Request $request, AccountCreationRequestRepository $accountCreationRepo, UserSecurityManagerInterface $security): Response
-    {
+    public function check(
+        Request $request,
+        AccountCreationRequestRepository $accountCreationRepo,
+        UserSecurityManagerInterface $security,
+        MailerServiceInterface $mailer
+    ): Response {
+
+        // registration ID is the contatenation of "<selector>.<token>"
         $requestParameter = $request->get("registrationId");
 
         if ($requestParameter) {
@@ -61,13 +86,14 @@ class RegistrationController extends AbstractController
 
             if ($accountRequest) {
 
-                $security->verify($accountRequest->getUser(), $accountRequest->getId());
+                $security->verify($accountRequest);
+                $mailer->sendAccountCreationRequestConfirmed($accountRequest);
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
             }
         } else {
 
-            return $this->redirectToRoute("app_main_home");
+            return $this->redirectToRoute("app_home");
         }
 
         return $this->redirectToRoute("app_login");
