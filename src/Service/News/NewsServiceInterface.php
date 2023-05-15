@@ -6,7 +6,7 @@ use App\Entity\News;
 
 interface NewsServiceInterface
 {
-    public function publish(int $id): ?News;
+    public function publish(News $news): ?News;
 
-    public function unpublish(int $id): ?News;
+    public function unpublish(News $news): ?News;
 }

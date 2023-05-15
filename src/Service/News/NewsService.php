@@ -15,28 +15,20 @@ final class NewsService implements NewsServiceInterface
         $this->newsRepo = $newsRepo;
     }
 
-    public function publish(int $id): ?News
+    public function publish(News $news): ?News
     {
-        $news = $this->newsRepo->find($id);
+        $news->setIsPublished(true);
 
-        if ($news !== null) {
-            $news->setIsPublished(true);
-
-            $this->newsRepo->save($news, true);
-        }
+        $this->newsRepo->save($news, true);
 
         return $news;
     }
 
-    public function unpublish(int $id): ?News
+    public function unpublish(News $news): ?News
     {
-        $news = $this->newsRepo->find($id);
+        $news->setIsPublished(false);
 
-        if ($news !== null) {
-            $news->setIsPublished(false);
-
-            $this->newsRepo->save($news, true);
-        }
+        $this->newsRepo->save($news, true);
 
         return $news;
     }

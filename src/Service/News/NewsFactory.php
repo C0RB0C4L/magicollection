@@ -27,8 +27,15 @@ final class NewsFactory implements NewsFactoryInterface
 
     public function edit(News $news): News
     {
+        $news->setLastModifiedAt(new \DateTimeImmutable("now"));
+
         $this->newsRepo->save($news, true);
 
         return $news;
+    }
+
+    public function delete(News $news): void
+    {
+        $this->newsRepo->remove($news, true);
     }
 }
