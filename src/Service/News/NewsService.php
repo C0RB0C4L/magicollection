@@ -19,6 +19,10 @@ final class NewsService implements NewsServiceInterface
     {
         $news->setIsPublished(true);
 
+        if ($news->getPublishedOn() === null) {
+            $news->setPublishedOn(new \DateTimeImmutable("now"));
+        }
+
         $this->newsRepo->save($news, true);
 
         return $news;

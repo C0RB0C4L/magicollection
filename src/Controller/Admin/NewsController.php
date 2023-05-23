@@ -71,6 +71,24 @@ class NewsController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/delete', name: 'delete')]
+    public function delete(int $id, NewsRepository $newsRepo): Response
+    {
+        $news = $newsRepo->find($id);
+
+        if ($news !== null) {
+
+            $newsRepo->remove($news, true);
+
+            $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
+        } else {
+
+            $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
+        }
+
+        return $this->redirectToRoute("app_admin_news_index");
+    }
+
     #[Route('/{id}/publish', name: 'publish')]
     public function publish(int $id, NewsRepository $newsRepo, NewsServiceInterface $newsService): Response
     {

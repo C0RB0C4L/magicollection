@@ -1,0 +1,51 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.news{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="d-inline">
+		{% include '_core/renderer/back_button.html.twig' with {
+		'url_back': path("app_home")
+		}
+		%}
+		{{news.title}}
+	</h1>
+	<hr>
+
+	<div class="row row-cols-1">
+		<div class="col">
+
+			<div class="card bg-dark border-0 rounded-3 shadow-sm text-white-50 h-100 ">
+
+				<div class="card-header py-3">
+					<div class="d-flex justify-content-end">
+						<h6 class="my-0 d-inline">
+							{{news.createdAt|date("Y-m-d")}}
+						</h6>
+					</div>
+				</div>
+
+				<div class="card-body d-flex flex-column justify-content-between">
+					{{news.content|raw}}
+				</div>
+
+			</div>
+			
+		</div>
+	</div>
+
+
+{% endblock %}
+
+
+{# No "direct" use, serves as a base file for any new view #}
+{# uncomment if the page is less than 100vh 
+{% block footer %}
+	<div class="fixed-bottom">
+		{{ parent() }}
+	</div>
+{% endblock %}
+#}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\News;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +15,11 @@ class NewsForm extends AbstractType
         $builder
             ->add('title')
             ->add('summary')
-            ->add('content')
-        ;
+            ->add('content', TextareaType::class, [
+                'attr' => [
+                    'class' => "ckeditor"
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

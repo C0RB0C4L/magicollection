@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\NewsRepository;
+use App\Service\FlashMessageService;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,18 +17,26 @@ class NewsController extends AbstractController
     {
         $news = $newsRepo->findAll();
 
-        return $this->render('news/index.html.twig', []);
+        return $this->render('news/index.html.twig', [
+            "news" => $news
+        ]);
     }
 
-    #[Route('/{id}', name: 'detail')]
-    public function detail(int $id, NewsRepository $newsRepo): Response
+    #[Route('/{date}/{slug}', name: 'detail')]
+    public function detail(string $date, string $slug, NewsRepository $newsRepo): Response
     {
-        $news = $newsRepo->find($id);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d", $date);
+
+        $news = $newsRepo->findWithSlugAndDate($date, $slug);
 
         if ($news !== null) {
-            dump('works but there\'s work to do');
-            die;
+
+            return $this->render('news/detail.html.twig', [
+                "news" => $news
+            ]);
         }
+
+        $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
 
         return $this->redirectToRoute('app_news_index');
     }

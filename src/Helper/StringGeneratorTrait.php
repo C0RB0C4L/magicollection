@@ -12,7 +12,7 @@ Trait StringGeneratorTrait
      * @param bool $specialChars Sets if the password will contain non-alphanumeric characters.
      * @return string The password.
      */
-    public static function generateRandomPassword(?int $length = 12, bool $special = false)
+    public static function generateRandomPassword(?int $length = 12, bool $special = false): string
     {
         $length < 12 ? $length = 12 : $length;
         $length > 48 ? $length = 48 : $length;

@@ -1,0 +1,36 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.page{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1>
+		{% trans %}heading.news.index{% endtrans %}
+	</h1>
+	<hr>
+
+	<div class="row gy-4">
+
+		{% for new in news %}
+			<div class="col-lg-6 col-xl-4">
+				{% include "news/_partials/card.html.twig" with {'news': new}%}
+			</div>
+		{% endfor %}
+
+	</div>
+
+
+{% endblock %}
+
+
+{# No "direct" use, serves as a base file for any new view #}
+
+
+{% block footer %}
+	<div class="fixed-bottom">
+		{{ parent() }}
+	</div>
+{% endblock %}
+ 

@@ -29,6 +29,12 @@ class News
     #[ORM\Column]
     private ?bool $isPublished = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $publishedOn = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,4 +87,29 @@ class News
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPublishedOn(): ?\DateTimeImmutable
+    {
+        return $this->publishedOn;
+    }
+
+    public function setPublishedOn(?\DateTimeImmutable $publishedOn): self
+    {
+        $this->publishedOn = $publishedOn;
+
+        return $this;
+    }
 }
+ 

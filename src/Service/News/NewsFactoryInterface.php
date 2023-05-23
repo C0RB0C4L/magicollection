@@ -9,6 +9,4 @@ interface NewsFactoryInterface
     public function create(News $news, bool $publish): News;
 
     public function edit(News $news): News;
-
-    public function delete(News $news): void;
 }

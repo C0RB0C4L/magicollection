@@ -1,0 +1,22 @@
+<div class="row row-cols-1 gy-3">
+
+	<div class="col">
+
+		<span class="d-block">{% trans %}danger.zone{% endtrans %}</span>
+		<hr class="mt-0 mb-2">
+
+		<div class="row cols-1 cols-md-2 cols-xl-3">
+
+			<div class="col">
+				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropNewsDelete">
+					{% trans %}news.delete{% endtrans %}
+				</button>
+			</div>
+
+		</div>
+
+		{% include 'admin/news/modals/delete.html.twig' %}
+
+	</div>
+
+</div>

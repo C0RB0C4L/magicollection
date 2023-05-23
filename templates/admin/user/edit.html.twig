@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% set user = form.vars.value %}
+	{% set user = form.vars.value %}
 
 	<h1 class="d-inline">
 		{% include '_core/renderer/back_button.html.twig' with {
@@ -29,11 +29,13 @@
 							{% trans %}admin.user{% endtrans %}
 						</h3>
 						{% include "_core/renderer/boolean_btn.html.twig" with {
-											'bool': user.isActive, 
-											'url_on': path("app_admin_user_activate", {id:user.id}), 
-											'url_off' : path("app_admin_user_deactivate", {id:user.id})
-											}	
-										%}
+							'bool': user.isActive, 
+							'url_on': path("app_admin_user_activate", {id:user.id}), 
+							'url_off' : path("app_admin_user_deactivate", {id:user.id}),
+							'text_on': "activate",
+							'text_off': "deactivate",
+							}
+						%}
 					</div>
 				</div>
 
