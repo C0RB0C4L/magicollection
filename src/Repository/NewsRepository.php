@@ -52,7 +52,7 @@ class NewsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('n')
             ->andWhere('n.slug = :slug')
-            ->andWhere('n.publishedOn <= :date')
+            ->andWhere('n.publishedOn >= :date')
             ->setParameter('slug', $slug)
             ->setParameter('date', $date)
             ->orderBy('n.id', 'ASC')

@@ -26,6 +26,7 @@ class NewsController extends AbstractController
     public function detail(string $date, string $slug, NewsRepository $newsRepo): Response
     {
         $date = DateTimeImmutable::createFromFormat("Y-m-d", $date);
+        $date = $date->setTime(0, 0, 0);
 
         $news = $newsRepo->findWithSlugAndDate($date, $slug);
 
