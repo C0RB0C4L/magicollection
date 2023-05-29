@@ -9,6 +9,7 @@ use App\Service\FlashMessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +24,7 @@ class AccountController extends AbstractController
 
 
     #[Route('/edit-password', name: 'password_edit_ajax')]
-    public function passwordEdit(Request $request, UserSecurityManagerInterface $security): Response
+    public function passwordEdit(Request $request, UserSecurityManagerInterface $security, RequestStack $stack): Response
     {
         $form = $this->createForm(PasswordEditForm::class);
 
@@ -49,15 +50,20 @@ class AccountController extends AbstractController
             return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
         } else {
 
-            return $this->render('account/modals/password_edit.html.twig', [
-                "form" => $form->createView()
-            ]);
+            if ($stack->getParentRequest() !== null) {
+
+                return $this->render('account/modals/password_edit.html.twig', [
+                    "form" => $form->createView()
+                ]);
+            }
+
+            return $this->redirectToRoute("app_account_index");
         }
     }
 
 
     #[Route('/edit-email', name: 'email_edit_ajax')]
-    public function emailEdit(Request $request, UserSecurityManagerInterface $security): Response
+    public function emailEdit(Request $request, UserSecurityManagerInterface $security, RequestStack $stack): Response
     {
         $form = $this->createForm(EmailEditForm::class);
 
@@ -83,9 +89,14 @@ class AccountController extends AbstractController
             return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
         } else {
 
-            return $this->render('account/modals/email_edit.html.twig', [
-                "form" => $form->createView()
-            ]);
+            if ($stack->getParentRequest() !== null) {
+
+                return $this->render('account/modals/email_edit.html.twig', [
+                    "form" => $form->createView()
+                ]);
+            }
+
+            return $this->redirectToRoute("app_account_index");
         }
     }
 }
