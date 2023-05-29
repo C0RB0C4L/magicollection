@@ -1,0 +1,50 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.page{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1>
+		{% trans %}heading.albums{% endtrans %}
+	</h1>
+	<hr>
+	<div>
+		<button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdropCreateAlbum">
+			{% trans %}album.create{% endtrans %}
+		</button>
+		{{ render(controller("App\\Controller\\AlbumController::create")) }}
+	</div>
+	<hr>
+
+	<div class="row">
+
+		<div class="row row-cols-1 row-cols-md-2 mb-4 gy-4">
+
+			<div class="col">
+				{% include "album/_partials/album_card.html.twig" %}
+			</div>
+
+			<div class="col">
+				{% include "album/_partials/album_card.html.twig" %}
+			</div>
+
+		</div>
+
+	</div>
+
+
+{% endblock %}
+
+
+{# No "direct" use, serves as a base file for any new view #}
+
+
+{# uncomment if the page is less than 100vh 
+{% block footer %}
+	<div class="fixed-bottom">
+		{{ parent() }}
+	</div>
+{% endblock %}
+ #}

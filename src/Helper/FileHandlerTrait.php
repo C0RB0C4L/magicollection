@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Methods and functions to manipulate files (saving, finding...)
  */
-trait FileHandlerHelper
+trait FileHandlerTrait
 {
     /**
      * Handles all the routine to safely save an uploaded file from a form.\

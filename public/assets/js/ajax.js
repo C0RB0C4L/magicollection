@@ -1,5 +1,6 @@
 ajaxFormSubmission("form[name='password_edit_form']", "staticBackdropEditPassword");
 ajaxFormSubmission("form[name='email_edit_form']", "staticBackdropEditEmail");
+ajaxFormSubmission("form[name='album_form']", "staticBackdropCreateAlbum");
 
 /**
  * @description Handles all the edit-password process on the account page.

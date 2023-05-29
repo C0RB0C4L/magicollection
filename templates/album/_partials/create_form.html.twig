@@ -1,0 +1,10 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{form_start(form)}}
+
+{{form_row(form.name)}}
+
+<button class="btn btn-info" type="submit" formaction="{{path('app_album_create')}}">
+	{% trans %}album.create{% endtrans %}
+</button>
+
+{{form_end(form)}}
