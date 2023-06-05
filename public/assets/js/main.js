@@ -46,22 +46,6 @@ function flashMessageManagement() {
     }
 }
 
-
-/**
- * @description Changes the native multiple select by a JS-powered version with built-in search input.\
- * Add the class .js-multiple to the \<select> element.
- * 
- * @return void
- */
-function enableMultiSelectInput() {
-    $(".js-multiple").select2({
-        theme: "bootstrap-5",
-        selectionCssClass: "select2--small",
-        dropdownCssClass: "select2--small",
-    });
-}
-
-
 /**
  * @description Highlights a form input duo if they are supposed to have the same content.\
  * Like "email" and "repeat your email".\
@@ -162,17 +146,4 @@ function formBulletsOnRequired() {
             document.getElementsByTagName("head")[0].appendChild(styleTag);
         }
     }
-}
-
-
-function enableDynamicTable() {
-    $('.js-table').bootstrapTable({
-        showToggle:true,
-        search: true,
-        showSearchClearButton: true,
-        pagination: true,
-        pageSize:50,
-        pageList:[50, 200, 500, 1000],
-        showExtendedPagination:true
-      })
 }
