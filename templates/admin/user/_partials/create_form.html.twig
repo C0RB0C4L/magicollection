@@ -1,11 +1,11 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {{form_start(form)}}
 
-{{form_row(form.username)}}
-{{form_row(form.email)}}
-{# {{form_row(form.isActive)}} #}
-{{form_row(form.password)}}
-
+{{form_row(form.username, {'label':"user.username"})}}
+{{form_row(form.email.first, {'label':"user.email.first"})}}
+{{form_row(form.email.second, {'label':"user.email.second"})}}
+{{form_row(form.password.first, {'label':"user.password.first"})}}
+{{form_row(form.password.second, {'label':"user.password.second"})}}
 
 <div class="d-flex justify-content-between">
 	<button class="btn btn-info" type="submit">

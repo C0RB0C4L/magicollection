@@ -6,7 +6,7 @@
 
 {% block content %}
 
-	{% set user = form.vars.value %}
+	{% set user = editForm.vars.value %}
 
 	<h1 class="d-inline">
 		{% include '_core/renderer/back_button.html.twig' with {
@@ -40,12 +40,17 @@
 				</div>
 
 				<div class="card-body d-flex flex-column justify-content-between">
-					{% include 'admin/user/_partials/edit_form.html.twig' %}
+					{% include 'admin/user/_partials/edit_user_form.html.twig' %}
+					<span class="d-block mt-4">{% trans %}roles.management{% endtrans %}</span>
+					<hr class="mt-0 mb-2">
+					{{ render(controller("App\\Controller\\Admin\\UserController::roles", { 'id': user.id })) }}
+
 				</div>
 
 			</div>
 
 		</div>
+
 
 		<div class="col">
 
@@ -65,13 +70,14 @@
 
 		</div>
 	</div>
-
 {% endblock %}
+
+
 {# No "direct" use, serves as a base file for any new view #}
 {# uncomment if the page is less than 100vh 
-	{% block footer %}
-		<div class="fixed-bottom">
-			{{ parent() }}
-		</div>
-	{% endblock %}
-	 #}
+		{% block footer %}
+			<div class="fixed-bottom">
+				{{ parent() }}
+			</div>
+		{% endblock %}
+		 #}

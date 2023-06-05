@@ -9,7 +9,7 @@ interface UserSecurityManagerInterface
 {
     public static function getRolesAll(): array;
 
-    public function updateRoles(UserInterface $user, string $role, bool $save);
+    public function updateRoles(UserInterface $user, array $roles, bool $isMaster, bool $save);
 
     public function activate(UserInterface $user);
 

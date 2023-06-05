@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Form\RegistrationForm;
 use App\Form\UserEditForm;
+use App\Form\UserRolesEditForm;
 use App\Repository\UserRepository;
 use App\Security\UserSecurityManager;
 use App\Security\UserSecurityManagerInterface;
@@ -12,6 +13,7 @@ use App\Service\FlashMessageService;
 use App\Service\User\UserFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -87,13 +89,54 @@ class UserController extends AbstractController
             }
 
             return $this->render('admin/user/edit.html.twig', [
-                "form" => $form->createView()
+                "editForm" => $form->createView()
             ]);
         }
 
         $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
 
         return $this->redirectToRoute("app_admin_user_index");
+    }
+
+
+    #[Route('/{id}/roles', name: 'roles')]
+    public function roles(int $id, Request $request, UserRepository $userRepo, UserSecurityManagerInterface $security, RequestStack $stack): Response
+    {
+        // prevents direct access
+        if ($stack->getParentRequest() === null && $request->getMethod() !== "POST") {
+
+            return $this->redirectToRoute("app_admin_user_edit", ["id" => $id]);
+        }
+
+        $user = $userRepo->find($id);
+
+        if ($security->protectSelfAndMaster($user, $this->getUser())) {
+            $this->addFlash(FlashMessageService::TYPE_WARNING, FlashMessageService::TYPE_WARNING);
+
+            return $this->redirectToRoute("app_admin_user_index");
+        }
+
+        if ($user !== null) {
+            
+            $form = $this->createForm(UserRolesEditForm::class, $user);
+            $security->isMaster($user) ? $isMaster = true : $isMaster = false;
+            $form->handleRequest($request);
+            dump($isMaster);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $roles = $form->get("roles")->getData();
+                $security->updateRoles($user, $roles, $isMaster, true);
+
+                $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
+
+                return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
+            }
+
+            return $this->render('admin/user/_partials/edit_roles_form.html.twig', [
+                "form" => $form->createView()
+            ]);
+        }
     }
 
 

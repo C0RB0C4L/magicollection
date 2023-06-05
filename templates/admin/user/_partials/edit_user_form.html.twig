@@ -1,0 +1,12 @@
+{% form_theme editForm 'bootstrap_5_layout.html.twig' %}
+{{form_start(editForm)}}
+
+{{form_row(editForm.username)}}
+{{form_row(editForm.email)}}
+
+{# {{form_row(form.roles, {"attr":{"class":"js-multiple"}})}} #}
+<button class="btn btn-info" type="submit">
+	{% trans %}edit.user{% endtrans %}
+</button>
+
+{{form_end(editForm)}}

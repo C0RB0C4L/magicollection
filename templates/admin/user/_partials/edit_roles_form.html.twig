@@ -1,0 +1,11 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{{form_start(form)}}
+
+{{form_row(form.roles, {"attr":{"class":"js-multiple"}})}}
+
+<button class="btn btn-info" type="submit" formaction="{{path('app_admin_user_roles', {id:form.vars.value.id})}}">
+	{% trans %}edit.roles{% endtrans %}
+</button>
+
+{{form_end(form)}}

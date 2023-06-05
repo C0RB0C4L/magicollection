@@ -46,6 +46,7 @@ final class UserSecurityManager implements UserSecurityManagerInterface
     public static function getRolesAll(): array
     {
         return [
+            self::MASTER,
             self::ADMIN,
             self::TESTER,
             self::BASIC
@@ -53,19 +54,16 @@ final class UserSecurityManager implements UserSecurityManagerInterface
     }
 
 
-    public function updateRoles(UserInterface|User $user, string $role, bool $save = false): void
+    public function updateRoles(UserInterface|User $user, array $roles, bool $isMaster = false, bool $save = false): void
     {
-        $currentRoles = $user->getRoles();
+        if ($isMaster) {
+            array_unshift($roles, self::MASTER);
+        }
+        
+        $user->setRoles(array_values(array_unique($roles)));
 
-        if (!in_array($role, $currentRoles)) {
-
-            $currentRoles[] = $role;
-
-            $user->setRoles($currentRoles);
-
-            if ($save) {
-                $this->userRepo->save($user, true);
-            }
+        if ($save) {
+            $this->userRepo->save($user, true);
         }
     }
 

@@ -9,14 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserEditForm extends AbstractType
+class UserRolesEditForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
-            ->add('email')
-/*             ->add('roles', ChoiceType::class, [
+            ->add('roles', ChoiceType::class, [
                 'mapped' => true,
                 'required' => true,
                 'choices' => array_values(UserSecurityManager::getRolesAll()),
@@ -25,8 +23,7 @@ class UserEditForm extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => false,
-            ]) */
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
