@@ -21,6 +21,9 @@
 				{% else %}
 					<span class="fw-bold">{{new.title}}</span>
 				{% endif %}
+				{% if new.createdAt|date('U') - 'now'|date('U') < 12700800 %}
+				<span class=" ms-2 badge rounded-pill text-bg-warning">new</span>
+				{% endif %}
 				<br>
 				{{new.summary}}
 				<a href="{{path('app_news_detail', {date:new.createdAt.format('Y-m-d'), slug:new.slug})}}" class="text-pink-50">read more</a>
