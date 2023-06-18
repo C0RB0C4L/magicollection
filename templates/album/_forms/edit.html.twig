@@ -1,0 +1,10 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{form_start(form, {'attr': {'id': 'album_rename_ajax'}}) }}
+
+{{form_row(form.name)}}
+
+<button class="btn btn-info" type="submit" formaction="{{path('app_album_rename_ajax', {id:form.vars.value.id})}}">
+	{% trans %}album.edit{% endtrans %}
+</button>
+
+{{form_end(form)}}

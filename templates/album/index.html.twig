@@ -14,23 +14,19 @@
 		<button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdropCreateAlbum">
 			{% trans %}album.create{% endtrans %}
 		</button>
-		{{ render(controller("App\\Controller\\AlbumController::create")) }}
+		{% include "album/_modals/create.html.twig" %}
 	</div>
 	<hr>
 
-	<div class="row">
-
-		<div class="row row-cols-1 row-cols-md-2 mb-4 gy-4">
-
+	<div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 mb-4 gy-4">
+		{% for album in albums %}
 			<div class="col">
 				{% include "album/_partials/album_card.html.twig" %}
 			</div>
+		{% endfor %}
 
-			<div class="col">
-				{% include "album/_partials/album_card.html.twig" %}
-			</div>
-
-		</div>
+		{# this modal is shared between each album (the form/data is replaced using an async request) #}
+		{% include "album/_modals/rename.html.twig" %}
 
 	</div>
 

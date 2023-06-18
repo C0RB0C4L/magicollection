@@ -1,0 +1,33 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}
+	{% trans %}tab.title.page{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="d-inline">
+		{% include '_core/renderer/back_button.html.twig' with {
+		'url_back': path("app_album_index")
+		}
+		%}
+		{% trans %}heading.album{% endtrans %}
+	</h1>
+	<hr>
+
+	<div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 mb-4 gy-4"></div>
+
+
+{% endblock %}
+
+
+{# No "direct" use, serves as a base file for any new view #}
+
+
+{# uncomment if the page is less than 100vh 
+{% block footer %}
+	<div class="fixed-bottom">
+		{{ parent() }}
+	</div>
+{% endblock %}
+ #}

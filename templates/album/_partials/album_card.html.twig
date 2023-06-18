@@ -1,0 +1,76 @@
+<div class="card bg-dark border-0 rounded-3 shadow-sm text-white-50">
+	<div class="row g-0">
+		<div class="col-md-5" style="transform: rotate(0);">
+			<img src="{{asset('assets/img/ori-231-jayemdae-tome.jpg')}}" class="img-fluid rounded-start" alt="...">
+			<a class="stretched-link" href={{path('app_album_detail', {'id':album.id} )}}></a>
+		</div>
+		<div class="col-md-7">
+			<div class="card-body">
+				<h5 class="my-0 fw-normal text-center mb-2">{{album.name}}</h5>
+				<p class="card-text mb-2">{{album.entries}}
+					{% trans %}entries{% endtrans %}
+					({{album.occupiedSlots}}
+					/
+					{{album.capacity}}
+					{% trans %}cards{% endtrans %})
+				</p>
+				<div class="progress position-relative mb-2">
+					{% if album.occupancyRate < 66 %}
+						<div class="progress-bar bg-success" role="progressbar" style="width: {{album.occupancyRate}}%;" aria-valuenow="{{album.occupancyRate}}" aria-valuemin="0" aria-valuemax="100">
+							<span class="ms-auto me-auto position-absolute w-100 text-white fw-bold">
+								{{album.occupancyRate}}
+								%</span>
+						</div>
+					{% endif %}
+					{% if album.occupancyRate >= 66 and album.occupancyRate < 85 %}
+						<div class="progress-bar bg-warning" role="progressbar" style="width: {{album.occupancyRate}}%;" aria-valuenow="{{album.occupancyRate}}" aria-valuemin="0" aria-valuemax="100">
+							<span class="ms-auto me-auto position-absolute w-100 text-white fw-bold">
+								{{album.occupancyRate}}
+								%</span>
+						</div>
+					{% endif %}
+					{% if album.occupancyRate >= 85 %}
+						<div class="progress-bar bg-danger" role="progressbar" style="width: {{album.occupancyRate}}%;" aria-valuenow="{{album.occupancyRate}}" aria-valuemin="0" aria-valuemax="100">
+							<span class="ms-auto me-auto position-absolute w-100 text-white fw-bold">
+								{{album.occupancyRate}}
+								%</span>
+						</div>
+					{% endif %}
+				</div>
+				<p class="card-text">
+					{% trans %}estimated.value{% endtrans %}:
+					{% if album.value == null or album.value == 0 %}0
+					{% else %}
+						{{album.value}}
+					{% endif %}
+					€
+				</p>
+				<div class="d-flex justify-content-between">
+					<a class="btn btn-sm btn-outline-primary w-66" href={{path('app_album_detail', {'id':album.id} )}} role="button">Consulter</a>
+					<button class="btn btn-sm btn-outline-light" type="button" data-form-fetch="{{path('app_album_rename_ajax', {'id':album.id} )}}" data-bs-target="#staticBackdropAlbumRenameAjax" data-bs-toggle="modal">
+						<i class="bi bi-pencil"></i>
+					</button>
+
+					<div class="dropdown">
+						<button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-gear"></i>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-dark">
+							<li>
+								<a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropDeleteConfirm{{album.id}}">delete</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Another action</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% include "album/_modals/delete_confirm.html.twig" %}

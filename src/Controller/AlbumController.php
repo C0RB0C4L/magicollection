@@ -40,31 +40,98 @@ class AlbumController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $albumToCreate = $form->getData();
-                $user = $this->getUser();
+                $currentUser = $this->getUser();
 
-                $factory->createAlbum($albumToCreate, $user);
+                $factory->createAlbum($albumToCreate, $currentUser);
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
 
                 return new JsonResponse(["status" => 1, "url" => $this->generateUrl("app_album_index")]);
             }
 
-            $responseBody = $this->renderForm('account/modals/email_edit.html.twig', [
+            $responseBody = $this->renderForm('album/_forms/form.html.twig', [
                 'form' => $form
             ]);
 
             return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
         } else {
 
-
             if ($stack->getParentRequest() !== null) {
 
-                return $this->render('album/modals/create.html.twig', [
+                return $this->render('album/_forms/create.html.twig', [
                     "form" => $form->createView()
                 ]);
             }
 
             return $this->redirectToRoute("app_album_index");
         }
+    }
+
+
+    #[Route('/{id}', name: 'detail')]
+    public function detail(int $id, AlbumRepository $albumRepo): Response
+    {
+        $currentUser = $this->getUser();
+        $album = $albumRepo->findOneBy(['id' => $id, 'user' => $currentUser]);
+
+        if ($album !== null) {
+
+            return $this->render('album/detail.html.twig', []);
+        }
+
+        return $this->redirectToRoute("app_album_index");
+    }
+
+
+    #[Route('/{id}/rename', name: 'rename_ajax')]
+    public function rename(int $id, AlbumRepository $albumRepo, Request $request): Response
+    {
+        if ($request->isXmlHttpRequest()) {
+
+            $currentUser = $this->getUser();
+            $album = $albumRepo->findOneBy(['id' => $id, 'user' => $currentUser]);
+
+            if ($album !== null) {
+
+                $form = $this->createForm(AlbumForm::class, $album);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $album = $form->getData();
+                    $albumRepo->save($album, true);
+
+                    $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
+
+                    return new JsonResponse(["status" => 1, "url" => $this->generateUrl("app_album_index")]);
+                }
+
+                $responseBody = $this->renderForm('album/_forms/edit.html.twig', [
+                    'form' => $form
+                ]);
+
+                return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
+            }
+        }
+
+        return $this->redirectToRoute("app_album_index");
+    }
+
+    #[Route('/{id}/delete', name: 'delete')]
+    public function delete(int $id, AlbumRepository $albumRepo): Response
+    {
+        $currentUser = $this->getUser();
+        $album = $albumRepo->findOneBy(['id' => $id, 'user' => $currentUser]);
+
+        if ($album !== null) {
+
+            $albumRepo->remove($album, true);
+
+            $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
+        } else {
+            $this->addFlash(FlashMessageService::TYPE_ERROR, FlashMessageService::MSG_ERROR);
+        }
+
+        return $this->redirectToRoute("app_album_index");
     }
 }
