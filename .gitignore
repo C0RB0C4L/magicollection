@@ -6,6 +6,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /local
 /public/assets/bundles/
+/public/assets/img/
 /templates/admin/_index.html.twig
 /templates/index.html.twig
 /var/
