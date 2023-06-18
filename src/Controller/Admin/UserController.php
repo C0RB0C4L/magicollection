@@ -121,7 +121,6 @@ class UserController extends AbstractController
             $form = $this->createForm(UserRolesEditForm::class, $user);
             $security->isMaster($user) ? $isMaster = true : $isMaster = false;
             $form->handleRequest($request);
-            dump($isMaster);
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -133,7 +132,7 @@ class UserController extends AbstractController
                 return $this->redirectToRoute("app_admin_user_edit", ["id" => $user->getId()]);
             }
 
-            return $this->render('admin/user/_partials/edit_roles_form.html.twig', [
+            return $this->render('admin/user/_forms/edit_roles.html.twig', [
                 "form" => $form->createView()
             ]);
         }

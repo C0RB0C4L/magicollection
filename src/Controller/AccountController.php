@@ -43,8 +43,8 @@ class AccountController extends AbstractController
                 return new JsonResponse(["status" => 1, "url" => $this->generateUrl("app_account_index")]);
             }
 
-            $responseBody = $this->renderForm('account/modals/password_edit.html.twig', [
-                'form' => $form
+            $responseBody = $this->renderForm('account/_forms/password.html.twig', [
+                "form" => $form
             ]);
 
             return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
@@ -52,7 +52,7 @@ class AccountController extends AbstractController
 
             if ($stack->getParentRequest() !== null) {
 
-                return $this->render('account/modals/password_edit.html.twig', [
+                return $this->render('account/_forms/password.html.twig', [
                     "form" => $form->createView()
                 ]);
             }
@@ -74,7 +74,6 @@ class AccountController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $email = $form->get("email")->getData();
-
                 $security->updateEmail($this->getUser(), $email);
 
                 $this->addFlash(FlashMessageService::TYPE_SUCCESS, FlashMessageService::MSG_SUCCESS);
@@ -82,8 +81,8 @@ class AccountController extends AbstractController
                 return new JsonResponse(["status" => 1, "url" => $this->generateUrl("app_account_index")]);
             }
 
-            $responseBody = $this->renderForm('account/modals/email_edit.html.twig', [
-                'form' => $form
+            $responseBody = $this->renderForm('account/_forms/email.html.twig', [
+                "form" => $form
             ]);
 
             return new JsonResponse(["status" => 0, "body" => $responseBody->getContent()]);
@@ -91,7 +90,7 @@ class AccountController extends AbstractController
 
             if ($stack->getParentRequest() !== null) {
 
-                return $this->render('account/modals/email_edit.html.twig', [
+                return $this->render('account/_forms/email.html.twig', [
                     "form" => $form->createView()
                 ]);
             }

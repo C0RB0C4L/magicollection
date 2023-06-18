@@ -21,7 +21,10 @@ class PasswordEditForm extends AbstractType
                 "constraints" => [
                     new UserPassword()
                 ],
-                'attr' => ['autocomplete' => 'old_password'],
+                'attr' => [
+                    'autocomplete' => 'old_password',
+                    'autofocus' => true
+                ],
                 'mapped' => false,
             ])
             ->add('password', RepeatedType::class, [

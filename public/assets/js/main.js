@@ -2,8 +2,6 @@ formSubmissionSpinner();
 formBulletsOnRequired();
 enableHighlightIfFieldsAreDifferent();
 
-enableMultiSelectInput();
-enableDynamicTable();
 flashMessageManagement();
 
 /**
@@ -26,6 +24,24 @@ function formSubmissionSpinner() {
             })
         }
     }
+}
+
+/**
+ * @description Adds or removes a spinner inside the desired \
+ * Works with bootstrap v5.2.x.
+ * 
+ * @return void
+ */
+function ajaxFetchSpinner(selector, bool) {
+
+    let container = document.querySelector(selector);
+    let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+    if (bool) {
+        container.innerHTML = spinner;
+    } else {
+        container.innerHTML = '';
+    }
+
 }
 
 
@@ -132,7 +148,7 @@ function formBulletsOnRequired() {
                     cssSelectors += 'legend.required::after,';
                 }
             }
-            if (mandatoryInputs.length > 0 && !form.contains(form.querySelector(mandatorySelector))) {
+            if (mandatoryInputs.length > 0 && !form.contains(form.querySelector(mandatorySelector)) && cssSelectors !== "") {
                 let mandatoryReminder = document.createElement('span');
                 mandatoryReminder.classList.add("mandatory-helper");
                 mandatoryReminder.innerText = "Red dots denote a required field.";

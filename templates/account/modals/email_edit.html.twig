@@ -6,20 +6,7 @@
 				<button class="btn-close btn-close-light" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-
-				{% form_theme form 'bootstrap_5_layout.html.twig' %}
-				{{form_start(form)}}
-
-				{{form_row(form.email.first, {'label':"email.new.first"})}}
-
-				{{form_row(form.email.second, {'label':"email.new.second"})}}
-
-				<button class="btn btn-info" type="submit" formaction="{{path('app_account_email_edit_ajax')}}">
-					{% trans %}change.email{% endtrans %}
-				</button>
-
-				{{form_end(form)}}
-
+				{{ render(controller("App\\Controller\\AccountController::emailEdit")) }}
 			</div>
 		</div>
 	</div>

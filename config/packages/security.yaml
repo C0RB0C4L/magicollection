@@ -34,6 +34,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/account.*, roles: ROLE_USER }
+        - { path: ^/album.*, roles: ROLE_USER }
         - { path: ^/betatest.*, roles: ROLE_TESTER }
         - { path: ^/admin.*, roles: ROLE_ADMIN }
     

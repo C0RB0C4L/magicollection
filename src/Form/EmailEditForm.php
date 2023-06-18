@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -17,7 +19,10 @@ class EmailEditForm extends AbstractType
             ->add('email', RepeatedType::class, [
                 'type' => EmailType::class,
                 'first_options' => [
-                    'attr' => ['autocomplete' => 'new_email'],
+                    'attr' => [
+                        'autocomplete' => 'new_email',
+                        'autofocus' => true
+                    ],
                     'constraints' => [
                         new NotBlank(),
                     ],
@@ -28,12 +33,20 @@ class EmailEditForm extends AbstractType
                         new NotBlank(),
                     ],
                 ],
-                'mapped' => false,
+                'mapped' => true,
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'constraints' => [
+                new UniqueEntity([
+                    'entityClass' => User::class,
+                    'fields' => 'email',
+                ]),
+            ],
+        ]);
     }
 }

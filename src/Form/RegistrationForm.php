@@ -24,12 +24,15 @@ class RegistrationForm extends AbstractType
     public const PASSWORD_MIN = 4;
     public const PASSWORD_MAX = 36;
     //public const PASSWORD_REGEX = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{4,}$/";
-    public const PASSWORD_REGEX = "/[a-z]/";
+    public const PASSWORD_REGEX = "/^[a-z]+$/";
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', TextType::class, [
+                'attr' => [
+                    'autofocus' => true
+                ],
                 'constraints' => [
                     new NotBlank(),
                     new Regex(['pattern' => self::USERNAME_REGEX]),

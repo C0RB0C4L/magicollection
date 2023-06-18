@@ -13,7 +13,11 @@ class NewsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
+            ->add('title', null, [
+                'attr' => [
+                    'autofocus' => true
+                ]
+            ])
             ->add('summary')
             ->add('content', TextareaType::class, [
                 'attr' => [
